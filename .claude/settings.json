@@ -326,5 +326,20 @@
         ]
       }
     ]
+  },
+  "attribution": {
+    "commit": "Co-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "Generated with Claude Code"
+  },
+  "outputStyle": "Explanatory",
+  "plansDirectory": "./reports",
+  "spinnerTipsOverride": {
+    "tips": [
+      "提示: 用 /dev-plan 先出方案再编码",
+      "提示: 上下文到 50% 时 /compact",
+      "提示: 试试 /goal 让 Claude 自动完成目标",
+      "提示: @context7 查库文档避免幻觉"
+    ],
+    "excludeDefault": false
   }
 }
