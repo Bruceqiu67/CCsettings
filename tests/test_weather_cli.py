@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import pytest
 
 from weather_cli.models import CityWeather
@@ -22,6 +23,15 @@ class TestCityWeather:
         with pytest.raises(AttributeError):
             weather.city = "上海"  # type: ignore[misc]
 
+    def test_city_weather_has_humidity(self) -> None:
+        weather = CityWeather(city="北京", temperature=28.0, humidity=65.0)
+        assert weather.humidity == 65.0
+
+    def test_city_weather_humidity_default_none(self) -> None:
+        """humidity 默认值为 None."""
+        weather = CityWeather(city="北京", temperature=28.0)
+        assert weather.humidity is None
+
 
 class TestMockWeatherService:
     """MockWeatherService 测试."""
@@ -38,16 +48,30 @@ class TestMockWeatherService:
             ("深圳", 32.0),
         ],
     )
-    def test_get_temperature_valid_city(
+    def test_get_weather_valid_city(
         self, service: MockWeatherService, city: str, expected_temp: float
     ) -> None:
-        weather = service.get_temperature(city)
+        weather = service.get_weather(city)
         assert weather.city == city
         assert weather.temperature == expected_temp
 
-    def test_get_temperature_invalid_city(self, service: MockWeatherService) -> None:
+    def test_get_weather_invalid_city(self, service: MockWeatherService) -> None:
         with pytest.raises(ValueError, match="不支持的城市"):
-            service.get_temperature("广州")
+            service.get_weather("广州")
+
+    @pytest.mark.parametrize(
+        ("city", "expected_humidity"),
+        [
+            ("北京", 65.0),
+            ("上海", 78.0),
+            ("深圳", 82.0),
+        ],
+    )
+    def test_get_weather_returns_humidity(
+        self, service: MockWeatherService, city: str, expected_humidity: float
+    ) -> None:
+        weather = service.get_weather(city)
+        assert weather.humidity == expected_humidity
 
 
 class TestCli:
@@ -65,3 +89,26 @@ class TestCli:
         assert exit_code == 1
         assert "错误" in captured.err
         assert "不支持的城市" in captured.err
+
+    def test_cli_humidity_flag(self, capsys: pytest.CaptureFixture[str]) -> None:
+        exit_code = main(["--humidity", "北京"])
+        captured = capsys.readouterr()
+        assert exit_code == 0
+        assert "北京: 65.0%" in captured.out
+
+    def test_cli_json_flag(self, capsys: pytest.CaptureFixture[str]) -> None:
+        exit_code = main(["--json", "北京"])
+        captured = capsys.readouterr()
+        assert exit_code == 0
+        data = json.loads(captured.out)
+        assert data["city"] == "北京"
+        assert data["temperature"] == 28.0
+        assert data["humidity"] == 65.0
+
+    def test_cli_json_without_humidity_data(self, capsys: pytest.CaptureFixture[str]) -> None:
+        """模拟 humidity=None 时 JSON 输出含有 null."""
+        exit_code = main(["--json", "北京"])
+        captured = capsys.readouterr()
+        data = json.loads(captured.out)
+        assert "humidity" in data
+        assert data["humidity"] == 65.0

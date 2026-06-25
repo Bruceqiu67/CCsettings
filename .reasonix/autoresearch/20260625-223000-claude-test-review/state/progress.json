@@ -1,0 +1,13 @@
+{
+  "iteration": 1,
+  "phase": "analysis",
+  "test_scenarios": {
+    "dev_plan": "pass",
+    "proactively_agent": "partial",
+    "playwright_mcp": "partial",
+    "code_check": "pass"
+  },
+  "issues_found": 3,
+  "test_gaps": 3,
+  "stale_count": 0
+}
