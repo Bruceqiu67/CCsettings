@@ -1,6 +1,7 @@
 ---
 name: session-note
-description: 生成当前会话的摘要和标签，帮助你回顾和整理
+description: 生成当前会话的摘要和标签，方便回顾和整理
+argument-hint: [optional-tag]
 model: haiku
 allowed-tools:
   - "Read"
@@ -10,6 +11,11 @@ allowed-tools:
 # Session Note
 
 为当前会话生成结构化摘要，方便日后回顾。
+
+## 执行合约
+
+- **禁止**：修改任何文件
+- **必须**：基于当前会话历史生成内容
 
 ## 任务
 

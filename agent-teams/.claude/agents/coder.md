@@ -12,6 +12,7 @@ model: sonnet
 color: blue
 maxTurns: 15
 permissionMode: acceptEdits
+memory: project
 ---
 
 # Coder Agent
@@ -24,6 +25,9 @@ permissionMode: acceptEdits
 - **必须**：每个新函数都有类型注解
 - **必须**：写完代码后写测试
 - **禁止**：修改方案没有指定的文件
+
+### Fail-closed guardrail
+如果一个模块的实现导致已有测试失败，必须立即回退并报告，不能跳过测试提交。
 
 ## 工作流程
 
