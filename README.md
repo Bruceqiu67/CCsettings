@@ -131,7 +131,7 @@ cp .claude/hooks/scripts/hooks.py ~/.claude/hooks/scripts/
 ## 📁 目录结构
 
 ```
-CCsettings/
+CCsettings/âââ changelog/              â ð 变更记录
 ├── CLAUDE.md              ← 仓库记忆文件（Claude 启动时读取）
 ├── README.md              ← 本文件
 ├── .mcp.json              ← MCP 服务器配置（Playwright + Context7 + DeepWiki）
