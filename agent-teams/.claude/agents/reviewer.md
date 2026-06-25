@@ -9,6 +9,8 @@ allowedTools:
 model: sonnet
 color: purple
 maxTurns: 8
+permissionMode: acceptEdits
+skills: []
 memory: project
 ---
 

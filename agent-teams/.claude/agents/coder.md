@@ -12,6 +12,7 @@ model: sonnet
 color: blue
 maxTurns: 15
 permissionMode: acceptEdits
+skills: []
 memory: project
 ---
 
