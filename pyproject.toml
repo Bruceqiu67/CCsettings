@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=75"]
-build-backend = "setuptools.backends._legacy:_Backend"
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "ccproject"
@@ -8,6 +8,9 @@ version = "0.1.0"
 description = "CCproject — 我的 Claude Code 最佳实践项目"
 readme = "README.md"
 requires-python = ">=3.12"
+
+[project.scripts]
+weather = "weather_cli.cli:main"
 
 [tool.ruff]
 line-length = 88

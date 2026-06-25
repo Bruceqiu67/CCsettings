@@ -21,7 +21,8 @@
       "Bash(find *)",
       "Bash(grep *)",
       "Bash(python *)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "mcp__playwright__*"
     ],
     "deny": [],
     "ask": [
@@ -37,5 +38,23 @@
   "maxTurns": 50,
   "theme": "dark",
   "respectGitignore": true,
-  "spinnerTipsEnabled": true
+  "spinnerTipsEnabled": true,
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "优化代码结构",
+      "查阅文档",
+      "思考最佳方案",
+      "检查类型安全",
+      "编写测试用例",
+      "分析代码影响",
+      "打磨代码质量",
+      "生成技术方案"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "echo \"🧊 CCproject | $(python --version 2>/dev/null | head -1)\"",
+    "padding": 0
+  }
 }

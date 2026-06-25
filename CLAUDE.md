@@ -2,7 +2,7 @@
 
 ## 项目概览
 
-这是 CCproject 的 Claude Code 最佳实践配置项目。本项目本身托管了 Claude Code 的各项配置（智能体、命令、技能、规则），是你使用 Claude Code 的起点。
+这是 CCproject — 一个 Python 项目，也是 Claude Code 最佳实践配置的载体。
 
 ## 技术栈
 
@@ -17,35 +17,57 @@
 ```
 ├── src/                       # 源代码
 ├── tests/                     # 测试
+├── agent-teams/               # 🤝 多智能体团队（独立运行）
+│   └── .claude/
+│       ├── agents/            ← planner, coder, reviewer
+│       └── commands/          ← /dev-flow
 ├── .claude/
 │   ├── agents/                # 🧠 智能体
-│   │   ├── coder.md           ← 编码实现
+│   │   ├── coder.md           ← 编码实现（PROACTIVELY）
 │   │   ├── reviewer.md        ← 代码审查（PROACTIVELY）
 │   │   └── debugger.md        ← 调试 Bug
 │   ├── commands/              # 🎯 斜杠命令
 │   │   ├── dev-plan.md        ← /dev-plan 开发规划
 │   │   ├── code-check.md      ← /code-check 代码审查
-│   │   └── test.md            ← /test 测试诊断
-│   ├── skills/                # 🛠️ 技能
+│   │   ├── test.md            ← /test 测试诊断
+│   │   └── session-note.md    ← /session-note 会话总结
+│   ├── skills/
 │   │   └── python-style/      ← Python 风格规范
-│   ├── rules/                 # 📋 规则
+│   ├── rules/
 │   │   ├── python-rules.md    ← 编辑 .py 时加载
-│   │   └── git-rules.md       ← 全局加载
+│   │   └── git-rules.md       ← 提交规则
 │   └── settings.json          ← 项目设置
+├── .mcp.json                  ← 🌐 Playwright 浏览器自动化
 └── CLAUDE.md                  ← 本文件
 ```
 
-## 关键配置说明
+## 关键配置
 
-### 智能体
-- `coder`（PROACTIVELY）：编写代码和测试，预加载 python-style 技能
-- `reviewer`（PROACTIVELY）：审查 git diff 变更
-- `debugger`：分析并修复 Bug
+### 🧠 智能体（代理）
+| 智能体 | 触发方式 | 职责 |
+|--------|---------|------|
+| coder | PROACTIVELY 自动 | 编码实现 + 测试 |
+| reviewer | PROACTIVELY 自动 | 代码审查 |
+| debugger | 手动 / 遇到错误时 | 调试分析 |
 
-### 命令
-- `/dev-plan`：先输出技术方案 → 确认后再编码
-- `/code-check`：审查当前分支的代码质量
-- `/test`：运行 pytest 并诊断失败原因
+### 🎯 斜杠命令
+| 命令 | 用途 |
+|------|------|
+| `/dev-plan` | 先输出技术方案，确认后再编码 |
+| `/code-check` | 审查当前分支代码质量 |
+| `/test` | 运行 pytest 并诊断失败原因 |
+| `/session-note` | 生成会话摘要和标签 |
+
+### 🤝 Agent Teams
+独立运行的多智能体团队，位于 `agent-teams/` 目录：
+```bash
+cd agent-teams && claude
+/dev-flow
+```
+启动 3 个智能体接力：**planner → coder → reviewer**
+
+### 🌐 MCP 服务
+- **Playwright**：浏览器自动化（安装：`npx playwright install`）
 
 ## 开发准则
 
@@ -63,19 +85,10 @@
 - 复杂任务先用 `/dev-plan` 出方案，确认后再实现
 - 代码审查用 `/code-check`
 - 上下文用到约 50% 时手动 `/compact`
-- 遇到模糊的需求先问清楚再做
+- 会话结束时用 `/session-note` 生成摘要
 
 ## 调试技巧
-
-- 使用 `/doctor` 诊断 Claude Code 自身问题
-- 运行 `/usage` 查看当前会话使用量
-- 如果某条指令被忽略，尝试用更明确的措辞重述
-
-## 最佳实践来源
-
-本项目配置参考了 [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) 仓库的标准。
-
-- 智能体 frontmatter 使用 `allowedTools`（YAML 数组，首字母大写）
-- 命令 frontmatter 使用 `allowed-tools`（kebab-case）
-- 命令设 `model: haiku` 节省 token
-- 优先使用内置命令（`/plan`、`/review`），自定义命令避免冲突
+- `/doctor` — 诊断 Claude Code 自身问题
+- `/usage` — 查看会话用量
+- `/mcp` — 管理 MCP 服务器连接
+- `/skills` — 查看已加载的技能

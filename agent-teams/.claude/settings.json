@@ -1,0 +1,7 @@
+{
+  "model": "sonnet",
+  "permissionMode": "acceptEdits",
+  "maxTurns": 100,
+  "theme": "dark",
+  "spinnerTipsEnabled": true
+}
