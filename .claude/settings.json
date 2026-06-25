@@ -1,0 +1,43 @@
+{
+  "model": "sonnet",
+  "permissions": {
+    "allow": [
+      "Bash(ruff check *)",
+      "Bash(ruff format *)",
+      "Bash(pytest *)",
+      "Bash(mypy *)",
+      "Bash(pip install *)",
+      "Bash(uv *)",
+      "Bash(git *)",
+      "Bash(mkdir *)",
+      "Bash(rm *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(cut *)",
+      "Bash(tee *)",
+      "Bash(diff *)",
+      "Bash(python *)",
+      "Bash(python3 *)"
+    ]
+  },
+  "permissionMode": "acceptEdits",
+  "maxTurns": 50,
+  "theme": "dark",
+  "statusLine": {
+    "enabled": true,
+    "style": "icons"
+  },
+  "hooks": {
+    "enabled": true
+  }
+}
