@@ -21,18 +21,18 @@
         "deepwiki-mcp"
       ]
     },
-    "computer-use": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@github/computer-use-mcp"
-      ]
-    },
     "chrome-devtools": {
       "command": "npx",
       "args": [
         "-y",
         "chrome-devtools"
+      ]
+    },
+    "mcp-computer-use": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@github/computer-use-mcp"
       ]
     }
   }
