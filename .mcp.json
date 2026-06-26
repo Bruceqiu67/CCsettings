@@ -25,7 +25,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "chrome-devtools"
+        "chrome-devtools-mcp@latest"
       ]
     },
     "mcp-computer-use": {
