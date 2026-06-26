@@ -1,6 +1,6 @@
 # 🧊 CCsettings — Claude Code 最佳实践配置
 
-一套开箱即用的 Claude Code 配置模板，包含智能体、命令、技能、规则、提示音。
+一套开箱即用的 Claude Code 配置模板，全局安装后**任意项目**都能用。
 
 > 基于 [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) 标准搭建
 
@@ -11,11 +11,14 @@
 | 分类 | 内容 | 数量 |
 |------|------|------|
 | 🧠 **智能体** | coder · reviewer · debugger | 3 |
-| 🎯 **斜杠命令** | /dev-plan · /code-check · /test · /session-note | 4 |
+| 🎯 **斜杠命令** | /dev-plan · /code-check · /test · /session-note · /dev-cycle | 5 |
 | 🛠️ **技能** | python-style · git-commit | 2 |
-| 📋 **规则** | python-rules · markdown-docs | 2 |
-| 🔔 **提示音** | SessionStart · PostToolUse · TaskCompleted 等 20 个事件 | 20 |
+| 📋 **规则** | python-rules · git-rules · markdown-docs | 3 |
+| 🔔 **提示音** | 20 个事件（SessionStart · PostToolUse · TaskCompleted 等） | 20 |
+| 🌐 **MCP 服务** | Playwright · Context7 · DeepWiki · Computer Use · Chrome DevTools | 5 |
+| 🤝 **Agent Teams** | 独立团队：planner → coder → reviewer | 1 套 |
 | 📊 **增强** | Status Line · Spinner 动词 · Attribution · Output Style | — |
+| ⚙️ **其他** | Worktree 配置 · 跨仓库访问 · 自动清理旧会话 | — |
 
 ---
 
@@ -26,21 +29,16 @@
 ```bash
 # 1. 克隆本仓库
 git clone https://github.com/Bruceqiu67/CCsettings.git
+
+# 2. 复制到全局
 cd CCsettings
-
-# 2. 创建全局 Claude Code 配置目录
-mkdir -p ~/.claude
-
-# 3. 复制配置文件
 cp -r .claude/agents ~/.claude/
 cp -r .claude/commands ~/.claude/
 cp -r .claude/skills ~/.claude/
 cp -r .claude/hooks ~/.claude/
 cp -r .claude/rules ~/.claude/
 
-# 4. 合并 settings.json（保留你的 API 密钥）
-#    把 .claude/settings.json 的内容合并到 ~/.claude/settings.json 中
-#    不要覆盖 env 字段（里面是 API key 等敏感信息）
+# 3. 合并 settings.json（保留你的 API 密钥到 env 字段）
 ```
 
 ### 安装后
@@ -56,10 +54,9 @@ claude
 #   🎯 /code-check — 审查代码质量
 #   🎯 /test — 运行测试并诊断
 #   🎯 /session-note — 会话摘要和标签
+#   🎯 /dev-cycle — 5 步完整开发周期（plan→code→test→review→ship）
 #   🔔 蜂鸣提示音 — 每个事件不同音调
 ```
-
-> **提示**: 每个项目根目录下还需要一个 `CLAUDE.md` 文件来描述项目本身（技术栈、目录结构、开发规范）。这是项目级的记忆文件，全局配置不会覆盖它。
 
 ---
 
@@ -67,10 +64,11 @@ claude
 
 | 命令 | 用途 | 说明 |
 |------|------|------|
-| `/dev-plan` | **开发规划** | 先输出技术方案 → 等你确认 → 自动调 coder agent 实现 |
-| `/code-check` | **代码审查** | 审查当前 git diff，调 reviewer agent 输出结构化报告 |
-| `/test` | **测试诊断** | 运行 pytest，分析失败原因，提出修复方案 |
+| `/dev-plan` | **开发规划** | 出方案 → 确认 → 调 coder agent 实现 |
+| `/code-check` | **代码审查** | 审 git diff，调 reviewer agent 输出报告 |
+| `/test` | **测试诊断** | 运行 pytest，分析失败原因 |
 | `/session-note` | **会话总结** | 生成标签 + 摘要 + 变更清单 |
+| `/dev-cycle` | **完整开发周期** | 5 步：plan → code → test → review → ship |
 
 ---
 
@@ -80,9 +78,19 @@ claude
 |--------|---------|------|
 | **coder** | PROACTIVELY（自动） | 编码实现 + 编写测试 + 类型注解 |
 | **reviewer** | PROACTIVELY（自动） | 审查 git diff，检查正确性/安全性/性能 |
-| **debugger** | 手动（遇到 Bug 时用） | 定位根因 + 提出修复方案 |
+| **debugger** | 手动（遇到 Bug 时用） | 定位根因 + 修复方案 |
 
-智能体通过 YAML frontmatter 定义，位于 `.claude/agents/*.md`。
+---
+
+## 🌐 MCP 服务
+
+| 服务 | 用途 | 安装 |
+|------|------|------|
+| **Playwright** | 浏览器自动化 | `npx playwright install` |
+| **Context7** | 实时库文档查询 | 自动 |
+| **DeepWiki** | GitHub 仓库文档检索 | 自动 |
+| **Computer Use** | Claude 操控电脑 | `npx @anthropic-ai/claude-code-computer-use` |
+| **Chrome DevTools** | Chrome 浏览器集成 | 装 Chrome 扩展 |
 
 ---
 
@@ -100,30 +108,20 @@ claude
 | 任务完成 | 叮叮 (1200Hz) | 任务完成 |
 | 退出 Claude | 嗡↓ (440Hz) | 会话结束 |
 
-要关掉提示音：在 `~/.claude/settings.json` 或项目 `.claude/settings.json` 中设置 `"disableAllHooks": true`。
+要关掉提示音：`~/.claude/settings.json` 中设 `"disableAllHooks": true`。
 
 ---
 
 ## 🔧 如何更新
 
-当本仓库更新时：
-
 ```bash
-# 1. 拉取最新配置
 cd CCsettings
 git pull
-
-# 2. 选择性更新到全局
-#    覆盖全部（会覆盖你可能的本地修改）
 cp -r .claude/agents ~/.claude/
 cp -r .claude/commands ~/.claude/
 cp -r .claude/skills ~/.claude/
 cp -r .claude/hooks ~/.claude/
 cp -r .claude/rules ~/.claude/
-
-#    或者只更新你需要的某个文件
-#    比如只更新 hooks 脚本
-cp .claude/hooks/scripts/hooks.py ~/.claude/hooks/scripts/
 ```
 
 ---
@@ -131,56 +129,38 @@ cp .claude/hooks/scripts/hooks.py ~/.claude/hooks/scripts/
 ## 📁 目录结构
 
 ```
-CCsettings/âââ changelog/              â ð 变更记录
-├── CLAUDE.md              ← 仓库记忆文件（Claude 启动时读取）
+CCsettings/
+├── CLAUDE.md              ← 仓库记忆文件
 ├── README.md              ← 本文件
-├── .mcp.json              ← MCP 服务器配置（Playwright + Context7 + DeepWiki）
-├── pyproject.toml         ← Python 项目模板
+├── .mcp.json              ← 5 个 MCP 服务
+├── pyproject.toml
 │
 ├── .claude/
-│   ├── agents/            ← 🧠 智能体定义
-│   │   ├── coder.md
-│   │   ├── reviewer.md
-│   │   └── debugger.md
-│   ├── commands/          ← 🎯 斜杠命令
-│   │   ├── dev-plan.md
-│   │   ├── code-check.md
-│   │   ├── test.md
-│   │   └── session-note.md
-│   ├── skills/            ← 🛠️ 技能
-│   │   ├── python-style/
-│   │   └── git-commit/
-│   ├── hooks/             ← 🔔 提示音
-│   │   ├── scripts/hooks.py
-│   │   └── config/hooks-config.json
-│   ├── rules/             ← 📋 编码规则
-│   │   ├── python-rules.md
-│   │   └── markdown-docs.md
-│   ├── settings.json      ← ⚙️ 主配置
-│   ├── .gitignore
-│   └── agent-memory/      ← 智能体持久化记忆
+│   ├── agents/            ← coder, reviewer, debugger
+│   ├── commands/          ← dev-plan, code-check, test, session-note
+│   │   └── workflows/     ← dev-cycle
+│   ├── skills/            ← python-style, git-commit
+│   ├── hooks/             ← 20 事件蜂鸣提示音
+│   ├── rules/             ← python-rules, git-rules, markdown-docs
+│   ├── settings.json      ← 项目级配置
+│   └── agent-memory/
 │
-├── agent-teams/           ← 🤝 独立多智能体团队
-│   └── .claude/           ← 独立运行：cd agent-teams && claude
-│       ├── agents/        ← planner, coder, reviewer
-│       └── commands/      ← /dev-flow
-│
-└── src/ + tests/          ← 测试项目（天气 CLI + 文件搜索工具）
+├── agent-teams/           ← 独立多智能体团队
+├── .github/workflows/     ← GitHub Actions 自动跑测试
+├── changelog/
+└── src/ + tests/          ← 测试项目（51 个测试）
 ```
 
 ---
 
 ## ⚙️ 全局配置文件层级
 
-Claude Code 的配置按优先级从高到低：
-
 | 级别 | 位置 | 用途 |
 |------|------|------|
 | 命令行参数 | `claude --model opus` | 单次覆盖 |
-| 项目级 | 项目目录 `.claude/settings.local.json` | **git 忽略**，个人项目覆盖 |
-| 项目级 | 项目目录 `.claude/settings.json` | 团队共享，提交到 git |
+| 项目级 | `.claude/settings.local.json` | **git 忽略**，个人覆盖 |
+| 项目级 | `.claude/settings.json` | 团队共享 |
 | **全局** | **`~/.claude/settings.json`** | **所有项目通用** |
-| hooks 本地 | `.claude/hooks/config/hooks-config.local.json` | 个人提示音偏好 |
 
 ---
 
@@ -194,6 +174,7 @@ claude
 /code-check
 /test
 /session-note
+/dev-cycle 加一个新功能
 ```
 
 听到不同音调了吗？配置生效了 🎵
