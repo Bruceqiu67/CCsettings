@@ -33,6 +33,9 @@
       "Bash(npm *)",
       "Bash(pip *)",
       "Bash(pip3 *)"
+    ],
+    "additionalDirectories": [
+      "../"
     ]
   },
   "permissionMode": "acceptEdits",
