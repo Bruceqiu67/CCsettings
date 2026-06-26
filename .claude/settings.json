@@ -74,5 +74,6 @@
     "pr": "Generated with Claude Code"
   },
   "outputStyle": "Explanatory",
-  "plansDirectory": "./reports"
+  "plansDirectory": "./reports",
+  "cleanupPeriodDays": 30
 }
