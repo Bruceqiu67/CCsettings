@@ -25,14 +25,14 @@
       "command": "npx",
       "args": [
         "-y",
-        "@anthropic-ai/claude-code-computer-use"
+        "@github/computer-use-mcp"
       ]
     },
     "chrome-devtools": {
       "command": "npx",
       "args": [
         "-y",
-        "@anthropic-ai/chrome-devtools-mcp"
+        "chrome-devtools"
       ]
     }
   }
