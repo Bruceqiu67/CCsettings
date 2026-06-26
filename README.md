@@ -89,6 +89,39 @@ claude
 | **Playwright** | 浏览器自动化 | `npx playwright install` |
 | **Context7** | 实时库文档查询 | 自动 |
 | **DeepWiki** | GitHub 仓库文档检索 | 自动 |
+| **Computer Use** | Claude 操控电脑 | 自动 |
+| **Chrome DevTools** | Chrome 浏览器集成 | 装 Chrome 扩展 |
+
+### 全局 MCP 配置（所有项目通用）
+
+MCP 服务默认只在项目目录（`.mcp.json`）生效。要在**任意项目**中都能用，需配置到全局：
+
+```bash
+# 编辑 ~/.claude.json，在 mcpServers 字段中添加：
+# （不要覆盖已有数据）
+{
+  "mcpServers": {
+    "playwright": {"command": "npx", "args": ["-y", "@playwright/mcp"]},
+    "context7": {"command": "npx", "args": ["-y", "@upstash/context7-mcp"]},
+    "deepwiki": {"command": "npx", "args": ["-y", "deepwiki-mcp"]},
+    "mcp-computer-use": {"command": "npx", "args": ["-y", "@github/computer-use-mcp"]},
+    "chrome-devtools": {"command": "npx", "args": ["-y", "chrome-devtools"]}
+  }
+}
+```
+
+### MCP 常见问题
+
+| 问题 | 原因 | 解决 |
+|------|------|------|
+| `"computer-use" is a reserved MCP server name` | 名称被系统占用 | 改用 `mcp-computer-use` |
+| `chrome-devtools ✘ failed` | 需要 Chrome 浏览器运行 | 启动 Chrome 后再进 claude，或 `claude --chrome` |
+| `No MCP servers configured` | 项目目录没有 `.mcp.json` | 将 MCP 配到全局 `~/.claude.json` |
+| 第一次使用弹出确认 | MCP 首次加载需授权 | 选 `2. Use this and all future MCP servers in this project` |
+------|------|------|
+| **Playwright** | 浏览器自动化 | `npx playwright install` |
+| **Context7** | 实时库文档查询 | 自动 |
+| **DeepWiki** | GitHub 仓库文档检索 | 自动 |
 | **Computer Use** | Claude 操控电脑 | `npx @anthropic-ai/claude-code-computer-use` |
 | **Chrome DevTools** | Chrome 浏览器集成 | 装 Chrome 扩展 |
 
