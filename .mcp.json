@@ -20,6 +20,20 @@
         "-y",
         "deepwiki-mcp"
       ]
+    },
+    "computer-use": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/claude-code-computer-use"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/chrome-devtools-mcp"
+      ]
     }
   }
 }
