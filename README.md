@@ -105,7 +105,7 @@ MCP 服务默认只在项目目录（`.mcp.json`）生效。要在**任意项目
     "context7": {"command": "npx", "args": ["-y", "@upstash/context7-mcp"]},
     "deepwiki": {"command": "npx", "args": ["-y", "deepwiki-mcp"]},
     "mcp-computer-use": {"command": "npx", "args": ["-y", "@github/computer-use-mcp"]},
-    "chrome-devtools": {"command": "npx", "args": ["-y", "chrome-devtools"]}
+    "chrome-devtools": {"command": "npx", "args": ["-y", "chrome-devtools-mcp@latest"]}
   }
 }
 ```
@@ -118,12 +118,6 @@ MCP 服务默认只在项目目录（`.mcp.json`）生效。要在**任意项目
 | `chrome-devtools ✘ failed` | 需要 Chrome 浏览器运行 | 启动 Chrome 后再进 claude，或 `claude --chrome` |
 | `No MCP servers configured` | 项目目录没有 `.mcp.json` | 将 MCP 配到全局 `~/.claude.json` |
 | 第一次使用弹出确认 | MCP 首次加载需授权 | 选 `2. Use this and all future MCP servers in this project` |
-------|------|------|
-| **Playwright** | 浏览器自动化 | `npx playwright install` |
-| **Context7** | 实时库文档查询 | 自动 |
-| **DeepWiki** | GitHub 仓库文档检索 | 自动 |
-| **Computer Use** | Claude 操控电脑 | `npx @anthropic-ai/claude-code-computer-use` |
-| **Chrome DevTools** | Chrome 浏览器集成 | 装 Chrome 扩展 |
 
 ---
 

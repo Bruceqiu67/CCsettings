@@ -1,8 +1,8 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## 项目概览
 
-这是 CCproject — 一个 Python 项目，也是 Claude Code 最佳实践配置的载体。
+这是 CCproject — 一个 Python 项目，也是 Codex 最佳实践配置的载体。
 
 ## 技术栈
 
@@ -21,14 +21,13 @@
 │   └── .claude/                  ← cd agent-teams && claude
 │       ├── agents/               ← planner / coder / reviewer
 │       └── commands/             ← /dev-flow
-├── .claude/                      # 🎯 主配置
-│   ├── agents/                   ← coder / reviewer / debugger
-│   ├── commands/                 ← /dev-plan /code-check /test /session-note
-│   ├── skills/                   ← python-style
-│   ├── rules/                    ← python-rules / git-rules
-│   └── settings.json             ← spinner + statusline + MCP 权限
+├── .codex/                       # 🎯 Codex 配置
+│   ├── agents/                   ← coder.toml / reviewer.toml / debugger.toml
+│   └── config.toml               ← MCP 服务配置
+├── .claude/                      # 🎯 Claude 主配置
+├── .agents/                      # 🎯 通用 Agent / Antigravity 技能
 ├── .mcp.json                     # 🌐 Playwright + Context7 + DeepWiki
-└── CLAUDE.md
+└── AGENTS.md
 ```
 
 ## 关键配置
@@ -56,7 +55,7 @@
 ### 🤝 Agent Teams
 独立团队，3 个智能体接力：
 ```bash
-cd agent-teams && claude
+cd agent-teams && Codex
 /dev-flow
 ```
 

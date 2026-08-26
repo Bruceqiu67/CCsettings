@@ -6,7 +6,6 @@ from __future__ import annotations
 import json
 import sys
 import winsound
-from pathlib import Path
 
 
 def play_tone(frequency: int, duration: int) -> None:
@@ -20,36 +19,36 @@ def play_tone(frequency: int, duration: int) -> None:
 def get_sound(event_name: str) -> tuple[int, int] | None:
     """根据事件名返回 (频率, 时长)。"""
     sounds = {
-        "SessionStart":         (880, 150),
-        "SessionEnd":           (440, 300),
-        "Setup":                (660, 100),
-        "PreToolUse":           (1200, 50),
-        "PostToolUse":          (1000, 80),
-        "PostToolUseFailure":   (200, 400),
-        "PostToolBatch":        (1100, 60),
-        "UserPromptSubmit":     (900, 100),
-        "UserPromptExpansion":  (850, 80),
-        "Notification":         (1400, 80),
-        "MessageDisplay":       (800, 60),
-        "SubagentStart":        (1000, 60),
-        "SubagentStop":         (700, 100),
-        "Stop":                 (500, 200),
-        "TaskCreated":          (960, 80),
-        "TaskCompleted":        (1200, 120),
-        "PreCompact":           (600, 100),
-        "PostCompact":          (1000, 100),
-        "PermissionRequest":    (500, 150),
-        "PermissionDenied":     (300, 300),
-        "TeammateIdle":         (550, 100),
-        "ConfigChange":         (900, 80),
-        "InstructionsLoaded":   (750, 80),
-        "Elicitation":          (650, 100),
-        "ElicitationResult":    (850, 80),
-        "StopFailure":          (200, 500),
-        "CwdChanged":           (700, 60),
-        "WorktreeCreate":       (780, 80),
-        "WorktreeRemove":       (580, 100),
-        "FileChanged":          (680, 60),
+        "SessionStart": (880, 150),
+        "SessionEnd": (440, 300),
+        "Setup": (660, 100),
+        "PreToolUse": (1200, 50),
+        "PostToolUse": (1000, 80),
+        "PostToolUseFailure": (200, 400),
+        "PostToolBatch": (1100, 60),
+        "UserPromptSubmit": (900, 100),
+        "UserPromptExpansion": (850, 80),
+        "Notification": (1400, 80),
+        "MessageDisplay": (800, 60),
+        "SubagentStart": (1000, 60),
+        "SubagentStop": (700, 100),
+        "Stop": (500, 200),
+        "TaskCreated": (960, 80),
+        "TaskCompleted": (1200, 120),
+        "PreCompact": (600, 100),
+        "PostCompact": (1000, 100),
+        "PermissionRequest": (500, 150),
+        "PermissionDenied": (300, 300),
+        "TeammateIdle": (550, 100),
+        "ConfigChange": (900, 80),
+        "InstructionsLoaded": (750, 80),
+        "Elicitation": (650, 100),
+        "ElicitationResult": (850, 80),
+        "StopFailure": (200, 500),
+        "CwdChanged": (700, 60),
+        "WorktreeCreate": (780, 80),
+        "WorktreeRemove": (580, 100),
+        "FileChanged": (680, 60),
     }
     return sounds.get(event_name)
 

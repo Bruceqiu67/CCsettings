@@ -1,0 +1,39 @@
+---
+name: "source-command-dev-plan"
+description: "启动开发规划流程——先出技术方案再编码"
+---
+
+# source-command-dev-plan
+
+Use this skill when the user asks to run the migrated source command `dev-plan`.
+
+## Command Template
+
+# Dev Plan Command
+
+在开始编码之前，先做完整的规划，方案确认后再启动实现。
+
+## 执行合约（不可违反）
+
+- **禁止**：在没有确认方案的情况下直接编码
+- **必须**：分析需求后先输出方案给用户确认
+- **禁止**：跳过风险评估
+
+## 规划流程
+
+### Step 1: 理解需求
+分析用户的需求，如果有模糊之处用 AskUserQuestion 澄清。
+
+### Step 2: 技术方案
+输出包含以下内容的方案：
+1. **架构设计**：模块划分、数据流
+2. **文件清单**：需要创建/修改的文件
+3. **分步计划**：每个步骤做什么
+4. **风险点**：可能的坑和应对方案
+5. **测试策略**：怎么验证
+
+### Step 3: 等待确认
+将方案展示给用户，**必须等待用户确认**后再进入实现阶段。
+
+### Step 4: 启动实现
+用户确认后，使用 Agent 工具调用 `coder` agent 开始实现。
